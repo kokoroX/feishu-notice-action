@@ -10,13 +10,13 @@ env:
   ENVIROMENT_NAME: kokoro 测试环境
 
 jobs:
-  test-get-version:
+  test-send-notice:
     runs-on: ubuntu-latest
     steps:
       - uses: kokoroX/get-version-action@main
         id: get-version
 
-      - uses: kokoroX/get-version-action@main
+      - uses: kokoroX/feishu-notice-action@main
         with:
           notice-title: ${{ env.SERVICE_NAME }} 服务发布测试通知
           notice-color: green
