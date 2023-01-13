@@ -35,7 +35,7 @@ runs:
           curl -X POST "${FEISHU_WEBHOOK}" \
           --header 'Content-Type: application/json' \
           --data-raw "$(cat <<EOF > post-data.json
-          {"msg_type":"interactive","card":{"config":{"wide_screen_mode":true},"elements":[{"tag":"markdown","content":"$NOTICE_MARKDOWN"},{"tag":"hr"},{"tag":"div","text":{"content":${COMMIT_MESSAGE},"tag":"plain_text"}},{"tag":"hr"},{"tag":"action","actions":[{"tag":"button","text":{"tag":"plain_text","content":"${BUTTON_TEXT}"},"type":"primary","multi_url":{"url":"${BUTTON_LINK}","pc_url":"","android_url":"","ios_url":""}}]}],"header":{"template":"${NOTICE_COLOR}","title":{"content":"${NOTICE_TITLE}","tag":"plain_text"}}}}
+          {"msg_type":"interactive","card":{"config":{"wide_screen_mode":true},"elements":[{"tag":"markdown","content":${{ toJSON(NOTICE_MARKDOWN) }}},{"tag":"hr"},{"tag":"div","text":{"content":${COMMIT_MESSAGE},"tag":"plain_text"}},{"tag":"hr"},{"tag":"action","actions":[{"tag":"button","text":{"tag":"plain_text","content":"${BUTTON_TEXT}"},"type":"primary","multi_url":{"url":"${BUTTON_LINK}","pc_url":"","android_url":"","ios_url":""}}]}],"header":{"template":"${NOTICE_COLOR}","title":{"content":"${NOTICE_TITLE}","tag":"plain_text"}}}}
           EOF
           )"
       shell: bash
