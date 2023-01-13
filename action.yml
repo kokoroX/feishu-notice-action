@@ -13,7 +13,7 @@ inputs:
   button-link:
     description: 按钮链接
     required: true
-  feishu-webhook-url:
+  webhook-url:
     description: 飞书消息通知 webhook url
     required: true
   notice-markdown:
@@ -27,15 +27,16 @@ runs:
         NOTICE_COLOR: ${{ inputs.notice-color }}
         BUTTON_TEXT: ${{ inputs.button-text }}
         BUTTON_LINK: ${{ inputs.button-link }}
-        FEISHU_WEBHOOK: ${{ inputs.feishu-webhook-url }}
+        WEBHOOK_URL: ${{ inputs.webhook-url }}
         COMMIT_MESSAGE: ${{ toJSON(github.event.head_commit.message) }}
+        NOTICE_TITLE: "${{ inputs.notice-title }}"
         NOTICE_MARKDOWN: ${{ toJSON(inputs.notice-markdown) }}
       run: |
-          NOTICE_TITLE="${{ inputs.notice-title }} | $(date +'%Y-%m-%d %H:%M:%S')"
-          curl -X POST "${FEISHU_WEBHOOK}" \
+          DATE_TIME=$(date +'%Y-%m-%d %H:%M:%S')
+          curl -X POST "${WEBHOOK_URL}" \
           --header 'Content-Type: application/json' \
           --data-raw "$(cat <<EOF
-          {"msg_type":"interactive","card":{"config":{"wide_screen_mode":true},"elements":[{"tag":"markdown","content":${NOTICE_MARKDOWN}},{"tag":"hr"},{"tag":"div","text":{"content":${COMMIT_MESSAGE},"tag":"plain_text"}},{"tag":"hr"},{"tag":"action","actions":[{"tag":"button","text":{"tag":"plain_text","content":"${BUTTON_TEXT}"},"type":"primary","multi_url":{"url":"${BUTTON_LINK}","pc_url":"","android_url":"","ios_url":""}}]}],"header":{"template":"${NOTICE_COLOR}","title":{"content":"${NOTICE_TITLE}","tag":"plain_text"}}}}
+          {"msg_type":"interactive","card":{"config":{"wide_screen_mode":true},"elements":[{"tag":"markdown","content":${NOTICE_MARKDOWN}},{"tag":"hr"},{"tag":"div","text":{"content":${COMMIT_MESSAGE},"tag":"plain_text"}},{"tag":"hr"},{"tag":"action","actions":[{"tag":"button","text":{"tag":"plain_text","content":"${BUTTON_TEXT}"},"type":"primary","multi_url":{"url":"${BUTTON_LINK}","pc_url":"","android_url":"","ios_url":""}}]},{"tag":"note","elements":[{"tag":"plain_text","content":"${DATE_TIME}"}]}],"header":{"template":"${NOTICE_COLOR}","title":{"content":"${NOTICE_TITLE}","tag":"plain_text"}}}}
           EOF
           )"
       shell: bash
