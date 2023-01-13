@@ -32,6 +32,7 @@ runs:
         NOTICE_TITLE: "${{ inputs.notice-title }}"
         NOTICE_MARKDOWN: ${{ toJSON(inputs.notice-markdown) }}
       run: |
+          export TZ='Asia/Shanghai'
           DATE_TIME=$(date +'%Y-%m-%d %H:%M:%S')
           curl -X POST "${WEBHOOK_URL}" \
           --header 'Content-Type: application/json' \
