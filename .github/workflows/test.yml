@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  SERVICE_NAME: auth-center
+  ENVIROMENT_NAME: kokoro 测试环境
+
+jobs:
+  test-get-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 0xTeams/get-version-action@main
+        id: get-version
+
+      - uses: 0xTeams/get-version-action@main
+        with:
+          notice-title: ${{ env.SERVICE_NAME }} 服务发布测试通知
+          notice-color: green
+          button-text: 查看 Actions
+          button-link: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          feishu-webhook-url: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          notice-markdown: "> 服务：${{ env.SERVICE_NAME }}\n> 结果：SUCCESS\n> 环境：${{ env.ENVIROMENT_NAME }}\n> 版本：${{ steps.get-version.outputs.version }}"
