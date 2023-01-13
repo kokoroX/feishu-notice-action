@@ -23,4 +23,4 @@ jobs:
           button-text: 查看 Actions
           button-link: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           webhook-url: ${{ secrets.FEISHU_WEBHOOK_URL }}
-          notice-markdown: "> 服务：${{ env.SERVICE_NAME }}\n> 结果：SUCCESS\n> 环境：${{ env.ENVIROMENT_NAME }}\n> 版本：${{ steps.get-version.outputs.version }}"
+          notice-markdown: "<font color=green>服务：${{ env.SERVICE_NAME }}\n结果：SUCCESS\n环境：${{ env.ENVIROMENT_NAME }}\n版本：${{ steps.get-version.outputs.version }}</font>"
