@@ -13,10 +13,10 @@ jobs:
   test-get-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: 0xTeams/get-version-action@main
+      - uses: kokoroX/get-version-action@main
         id: get-version
 
-      - uses: 0xTeams/get-version-action@main
+      - uses: kokoroX/get-version-action@main
         with:
           notice-title: ${{ env.SERVICE_NAME }} 服务发布测试通知
           notice-color: green
