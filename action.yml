@@ -22,7 +22,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - id: get-
     - id: send-notice
       env:
         NOTICE_COLOR: ${{ inputs.notice-color }}
