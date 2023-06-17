@@ -28,7 +28,7 @@ runs:
         BUTTON_TEXT: ${{ inputs.button-text }}
         BUTTON_LINK: ${{ inputs.button-link }}
         WEBHOOK_URL: ${{ inputs.webhook-url }}
-        COMMIT_MESSAGE: ${{ toJSON(github.event.head_commit.message) }}
+        COMMIT_MESSAGE: ${{ toJSON(github.event.head_commit.message || github.event.workflow_run.head_commit.message) }}
         NOTICE_TITLE: "${{ inputs.notice-title }}"
         NOTICE_MARKDOWN: ${{ toJSON(inputs.notice-markdown) }}
       run: |
